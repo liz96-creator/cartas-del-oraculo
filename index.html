@@ -7,14 +7,12 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        /* Fondo con patrón místico difuminado */
+        /* Fondo con tu imagen astrológica fija */
         body { 
-            background-color: #f7f3ed; 
-            background-image: 
-                radial-gradient(rgba(212, 189, 167, 0.15) 1px, transparent 0),
-                radial-gradient(rgba(212, 189, 167, 0.1) 2px, transparent 0);
-            background-size: 30px 30px, 60px 60px;
-            background-position: 0 0, 15px 15px;
+            background-image: url('fondo.jfif'); /* Si tu archivo termina en .jpg cambialo acá */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #4a3e3d; 
             display: flex; 
             justify-content: center; 
@@ -23,9 +21,20 @@
             overflow: hidden; 
             text-align: center; 
             padding: 20px; 
+            position: relative;
+        }
+
+        /* Capa difuminada encima de la imagen para que resalten los textos */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(247, 243, 237, 0.85); /* Tono pastel suave */
+            backdrop-filter: blur(2px); /* Difumina sutilmente los trazos dorados del fondo */
+            z-index: 1;
         }
         
-        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 400px; animation: fadeIn 0.8s ease forwards; }
+        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 400px; animation: fadeIn 0.8s ease forwards; z-index: 2; }
         .active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -38,7 +47,7 @@
         
         .mystic-divider { color: #d4bda7; font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 5px; opacity: 0.8; }
 
-        /* Botón Corregido */
+        /* Botón Estilo Cohesivo */
         .btn { 
             display: inline-block;
             background: linear-gradient(135deg, #dfcaa7 0%, #c4aa94 100%); 
@@ -129,8 +138,8 @@
         
         <p style="margin-top: 25px; font-size: 0.95rem; font-style: italic; color: #7a6a61;">🤍 Si este mensaje resonó con vos...</p>
         
-        <!-- CAMBIA LAS X POR TU NÚMERO (Ej: 54911XXXXXXXX) -->
-        <a href="https://wa.me/5492494468209?text=Me%20encantar%C3%ADa%20tener%20una%20lectura%20personalizada%20con%20vos" target="_blank" class="btn">✨ Quiero una lectura personalizada</a>
+        <!-- REEMPLAZÁ LAS X POR TU NÚMERO DE TELÉFONO -->
+        <a href="https://wa.me/XXXXXXXXXXX?text=Me%20encantar%C3%ADa%20tener%20una%20lectura%20personalizada%20con%20vos" target="_blank" class="btn">✨ Quiero una lectura personalizada</a>
     </div>
 
     <script>
