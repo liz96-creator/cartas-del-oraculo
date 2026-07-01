@@ -7,13 +7,14 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        /* Fondo con la imagen astrológica directa y fija */
+        /* Fondo inspirado en la estética astrológica con un sutil patrón místico difuminado */
         body { 
-            background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1000&auto=format&fit=crop');
-            background-color: #f7f3ed;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: #f7f3ed; 
+            background-image: 
+                radial-gradient(rgba(212, 189, 167, 0.15) 1px, transparent 0),
+                radial-gradient(rgba(212, 189, 167, 0.1) 2px, transparent 0);
+            background-size: 30px 30px, 60px 60px;
+            background-position: 0 0, 15px 15px;
             color: #4a3e3d; 
             display: flex; 
             justify-content: center; 
@@ -22,52 +23,27 @@
             overflow: hidden; 
             text-align: center; 
             padding: 20px; 
-            position: relative;
-        }
-
-        /* Capa difuminada de estilo místico para legibilidad */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(247, 243, 237, 0.88); 
-            backdrop-filter: blur(3px);
-            z-index: 1;
         }
         
-        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 400px; animation: fadeIn 0.8s ease forwards; z-index: 2; }
+        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 400px; animation: fadeIn 0.8s ease forwards; }
         .active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        h1 { font-size: 1.6rem; font-weight: 300; margin-bottom: 20px; color: #8e7663; letter-spacing: 2px; text-transform: uppercase; }
+        /* Estilos de Texto Refinados */
+        h1 { font-size: 1.7rem; font-weight: 300; margin-bottom: 20px; color: #8e7663; letter-spacing: 2px; text-transform: uppercase; }
         p { font-size: 1.1rem; line-height: 1.7; margin-bottom: 12px; color: #6b5b52; font-style: italic; }
         .fade-text { opacity: 0; animation: fadeIn 1.2s ease forwards; }
         .delay-1 { animation-delay: 0.8s; }
         .delay-2 { animation-delay: 2.2s; }
         
+        /* Detalles Astrológicos en Pantalla */
         .mystic-divider { color: #d4bda7; font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 5px; opacity: 0.8; }
 
-        /* Botón dorado místico corregido */
-        .btn { 
-            display: inline-block;
-            background: linear-gradient(135deg, #dfcaa7 0%, #c4aa94 100%); 
-            color: #ffffff; 
-            border: none; 
-            padding: 16px 32px; 
-            font-size: 0.95rem; 
-            font-weight: 600; 
-            letter-spacing: 1px; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            margin-top: 30px; 
-            box-shadow: 0 6px 20px rgba(196, 170, 148, 0.4); 
-            transition: all 0.3s ease; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-        }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(196, 170, 148, 0.6); }
+        /* Botones */
+        .btn { background: #cbd4bda7; background: linear-gradient(135deg, #dfcaa7 0%, #c4aa94 100%); color: #fff; border: none; padding: 16px 32px; font-size: 0.95rem; font-weight: 600; letter-spacing: 1px; border-radius: 30px; cursor: pointer; margin-top: 30px; box-shadow: 0 6px 20px rgba(196, 170, 148, 0.3); transition: all 0.3s ease; text-decoration: none; text-transform: uppercase; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(196, 170, 148, 0.45); }
 
-        /* Animación de mezcla de las cartas */
+        /* Animación de Mezcla de Cartas */
         .deck-container { position: relative; width: 160px; height: 260px; margin: 30px 0; }
         .shuffling-card { position: absolute; width: 100%; height: 100%; background: #fdfbf7; border: 2px solid #dfcaa7; border-radius: 12px; box-shadow: 0 8px 25px rgba(142,118,99,0.1); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #c4aa94; }
         .card-1 { animation: shuffle1 1.2s ease-in-out infinite; }
@@ -77,10 +53,11 @@
         @keyframes shuffle2 { 0%, 100% { transform: translate(0, 0) rotate(0deg); z-index: 2; } 33% { transform: translate(35px, 15px) rotate(9deg); z-index: 3; } 66% { transform: translate(-35px, -5px) rotate(-6deg); z-index: 1; } }
         @keyframes shuffle3 { 0%, 100% { transform: translate(0, 0) rotate(0deg); z-index: 1; } 33% { transform: translate(20px, -15px) rotate(6deg); z-index: 2; } 66% { transform: translate(-30px, 10px) rotate(-9deg); z-index: 3; } }
 
+        /* Brillos y Estrellas */
         .sparkles { position: absolute; width: 140%; height: 140%; top: -20%; left: -20%; pointer-events: none; background-image: radial-gradient(circle, #fff 10%, transparent 20%), radial-gradient(circle, #dfcaa7 15%, transparent 25%); background-size: 40px 40px, 60px 60px; background-position: 0 0, 30px 30px; animation: floatSparkles 4s linear infinite; opacity: 0.6; }
         @keyframes floatSparkles { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-50px) rotate(10deg); } }
 
-        /* Revelación del Oráculo */
+        /* Revelación de Carta */
         .final-card-container { perspective: 1000px; width: 190px; height: 300px; margin: 25px 0; }
         .final-card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: revealCard 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-shadow: 0 12px 30px rgba(142,118,99,0.15); }
@@ -88,7 +65,7 @@
         .card-front { background: #fff; border: 2px solid #f2ede4; transform: rotateY(180deg); color: #5a4c42; }
         @keyframes revealCard { from { transform: rotateY(0deg) scale(0.8); } to { transform: rotateY(180deg) scale(1); } }
         
-        .card-icon { font-size: 2.8rem; margin-bottom: 15px; }
+        .card-icon { font-size: 2.8rem; margin-bottom: 15px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05)); }
         .card-title { font-weight: 400; font-size: 1.2rem; margin-bottom: 12px; color: #8e7663; text-transform: uppercase; letter-spacing: 2px; }
         .card-desc { font-size: 0.88rem; color: #7a6a61; line-height: 1.5; font-style: normal; }
         .mindfulness-note { font-size: 0.88rem; color: #9c8a7f; font-style: italic; max-width: 320px; margin-top: 20px; line-height: 1.5; border-top: 1px dashed #dfcaa7; padding-top: 15px; }
