@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Mensaje de Hoy 🌙</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f4ece1; color: #4a3e3d; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; text-align: center; padding: 20px; }
+        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 400px; animation: fadeIn 0.8s ease forwards; }
+        .active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Estilos de Texto */
+        h1 { font-size: 1.6rem; font-weight: 400; margin-bottom: 15px; color: #6b5b52; letter-spacing: 1px; }
+        p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 10px; color: #7a6a61; }
+        .fade-text { opacity: 0; animation: fadeIn 1s ease forwards; }
+        .delay-1 { animation-delay: 1s; }
+        .delay-2 { animation-delay: 2.5s; }
+        
+        /* Botones */
+        .btn { background: #d4bda7; color: #fff; border: none; padding: 14px 28px; font-size: 1rem; border-radius: 30px; cursor: pointer; margin-top: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; text-decoration: none; }
+        .btn:hover { background: #c2aa94; transform: translateY(-2px); }
+
+        /* Animación de Mezcla de Cartas */
+        .deck-container { position: relative; width: 160px; height: 260px; margin: 30px 0; }
+        .shuffling-card { position: absolute; width: 100%; height: 100%; background: #e6dcd0; border: 2px solid #d4bda7; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #b59f8a; }
+        .card-1 { animation: shuffle1 1.2s ease-in-out infinite; }
+        .card-2 { animation: shuffle2 1.2s ease-in-out infinite; animation-delay: 0.3s; }
+        .card-3 { animation: shuffle3 1.2s ease-in-out infinite; animation-delay: 0.6s; }
+        @keyframes shuffle1 { 0%, 100% { transform: translate(0, 0) rotate(0deg); z-index: 3; } 33% { transform: translate(-40px, -10px) rotate(-10deg); z-index: 1; } 66% { transform: translate(20px, 5px) rotate(5deg); z-index: 2; } }
+        @keyframes shuffle2 { 0%, 100% { transform: translate(0, 0) rotate(0deg); z-index: 2; } 33% { transform: translate(30px, 15px) rotate(8deg); z-index: 3; } 66% { transform: translate(-30px, -5px) rotate(-5deg); z-index: 1; } }
+        @keyframes shuffle3 { 0%, 100% { transform: translate(0, 0) rotate(0deg); z-index: 1; } 33% { transform: translate(15px, -15px) rotate(5deg); z-index: 2; } 66% { transform: translate(-25px, 10px) rotate(-8deg); z-index: 3; } }
+
+        /* Brillos y Estrellas */
+        .sparkles { position: absolute; width: 120%; height: 120%; top: -10%; left: -10%; pointer-events: none; background-image: radial-gradient(circle, #fff 10%, transparent 20%), radial-gradient(circle, #fff 15%, transparent 20%); background-size: 40px 40px, 50px 50px; background-position: 0 0, 25px 25px; animation: floatSparkles 3s linear infinite; opacity: 0.4; }
+        @keyframes floatSparkles { 0% { transform: translateY(0); } 100% { transform: translateY(-40px); } }
+
+        /* Revelación de Carta (Giro de 360) */
+        .final-card-container { perspective: 1000px; width: 180px; height: 290px; margin: 25px 0; }
+        .final-card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: revealCard 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .card-back { background: #e6dcd0; border: 3px double #d4bda7; color: #b59f8a; font-size: 2.5rem; }
+        .card-front { background: #fff; border: 2px solid #e6dcd0; transform: rotateY(180deg); color: #5a4c42; }
+        @keyframes revealCard { from { transform: rotateY(0deg) scale(0.8); } to { transform: rotateY(180deg) scale(1); } }
+        
+        .card-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .card-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 8px; color: #8e7663; text-transform: uppercase; letter-spacing: 1px; }
+        .card-desc { font-size: 0.85rem; color: #7a6a61; line-height: 1.4; }
+        .mindfulness-note { font-size: 0.9rem; color: #9c8a7f; font-style: italic; max-width: 300px; margin-top: 15px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA 1: Entrada -->
+    <div id="screen-welcome" class="screen active">
+        <p style="font-size: 2rem; margin-bottom: 10px;">☀️✨</p>
+        <h1>Un mensaje para vos</h1>
+        <p class="fade-text delay-1">"Respirá profundo..."</p>
+        <p class="fade-text delay-2">"Tomate este momento para conectar con vos."</p>
+        <p class="fade-text delay-2" style="margin-top: 10px; font-weight: 500;">Cuando estés lista/o recibí tu mensaje de hoy.</p>
+        <button class="btn fade-text delay-2" style="animation-delay: 4s;" onclick="startOracle()">🔮 Quiero mi mensaje para hoy</button>
+    </div>
+
+    <!-- PANTALLA 2: Animación de Mezcla -->
+    <div id="screen-shuffle" class="screen">
+        <h1>Cerrá los ojos unos segundos...</h1>
+        <p>Observá qué mensaje llega para vos ✨</p>
+        <div class="deck-container">
+            <div class="sparkles"></div>
+            <div class="shuffling-card card-1">✨</div>
+            <div class="shuffling-card card-2">🌙</div>
+            <div class="shuffling-card card-3">🔮</div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 3: Resultado de la Carta -->
+    <div id="screen-result" class="screen">
+        <h1>🌙 Tu mensaje de hoy es...</h1>
+        
+        <div class="final-card-container">
+            <div class="final-card">
+                <div class="card-face card-back">🔮</div>
+                <div class="card-face card-front">
+                    <div class="card-icon" id="oracle-icon">🌿</div>
+                    <div class="card-title" id="oracle-title">El Presente</div>
+                    <div class="card-desc" id="oracle-desc">Tu único espacio real es el aquí y el ahora. Soltá el control del futuro y habitá este instante con gratitud.</div>
+                </div>
+            </div>
+        </div>
+
+        <p class="mindfulness-note">"Recordá: esta carta no busca predecir tu futuro, sino regalarte una pausa para observar, reflexionar y conectar con tu intuición."</p>
+        
+        <p style="margin-top: 30px; font-size: 1rem;">🤍 <em>Si este mensaje resonó con vos...</em></p>
+        <!-- REEMPLAZA EL LINK DE ABAJO CON TU LINK DE WHATSAPP O INSTAGRAM DIRECT -->
+        <a href="https://wa.me/TU_NUMERO_AQUI" target="_blank" class="btn">✨ Quiero una lectura personalizada conmigo</a>
+    </div>
+
+    <script>
+        // Base de datos de mensajes aleatorios inspirados en mindfulness
+        const cartas = [
+            { icon: "🌿", title: "El Presente", desc: "Tu único espacio real es el aquí y el ahora. Soltá el control del futuro y habitá este instante con gratitud." },
+            { icon: "🌊", title: "Fluir", desc: "No nades contra la corriente. Hay sabiduría en aceptar los ritmos de la vida; lo que es para vos, llegará a su tiempo." },
+            { icon: "🦋", title: "Transformación", desc: "Los cambios profundos suelen ser silenciosos y requieren paciencia. Confiá en tu proceso de metamorfosis." },
+            { icon: "✨", title: "Intuición", desc: "Silenciá el ruido externo. La respuesta que estás buscando ya habita adentro tuyo; solo necesitás escuchar tu voz interna." },
+            { icon: "🌙", title: "Pausa", desc: "El descanso también es parte del camino. Regalate un momento para no hacer nada, reponer energías y simplemente ser." },
+            { icon: "💎", title: "Claridad", desc: "Limpiá tus pensamientos quitando lo accesorio. Enfocá tu energía únicamente en aquello que encienda tu paz interior." }
+        ];
+
+        function startOracle() {
+            // Cambiar a pantalla de mezclado
+            document.getElementById('screen-welcome').classList.remove('active');
+            document.getElementById('screen-shuffle').classList.add('active');
+
+            // Seleccionar carta aleatoria
+            const cartaElegida = cartas[Math.floor(Math.random() * cartas.length)];
+            
+            // Inyectar datos en la carta final
+            document.getElementById('oracle-icon').innerText = cartaElegida.icon;
+            document.getElementById('oracle-title').innerText = cartaElegida.title;
+            document.getElementById('oracle-desc').innerText = cartaElegida.desc;
+
+            // Esperar 4 segundos (entre 3 y 5) para mostrar el resultado
+            setTimeout(() => {
+                document.getElementById('screen-shuffle').classList.remove('active');
+                document.getElementById('screen-result').classList.add('active');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
